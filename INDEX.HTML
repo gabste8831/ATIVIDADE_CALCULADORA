@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculadora de Viagem</title>
+</head>
+<body>
+    <h1>Calculadora de Viagem</h1>
+    <form>
+        <label for="nomeViagem">Nome da Viagem:</label>
+        <input type="text" id="nomeViagem" required><br><br>
+
+        <label for="kmPercorridos">Kilômetros Percorridos:</label>
+        <input type="number" id="kmPercorridos" required><br><br>
+
+        <label for="litrosCombustivel">Litros de Combustível Gastos:</label>
+        <input type="number" id="litrosCombustivel" required><br><br>
+
+        <label for="valorLitroCombustivel">Valor do Litro de Combustível:</label>
+        <input type="number" id="valorLitroCombustivel" step="0.01" required><br><br>
+
+        <button type="button" onclick="calcularViagem()">Calcular Viagem</button>
+    </form>
+
+    <div id="resultado"></div>
+
+    <script>
+        function calcularViagem() {
+            const nomeViagem = document.getElementById("nomeViagem").value;
+            const kmPercorridos = parseFloat(document.getElementById("kmPercorridos").value);
+            const litrosCombustivel = parseFloat(document.getElementById("litrosCombustivel").value);
+            const valorLitroCombustivel = parseFloat(document.getElementById("valorLitroCombustivel").value);
+
+            if (nomeViagem === "") {
+                alert("Por favor, insira o nome da viagem.");
+                return;
+            }
+
+            if (isNaN(kmPercorridos) || isNaN(litrosCombustivel) || isNaN(valorLitroCombustivel) || kmPercorridos <= 0 || litrosCombustivel <= 0 || valorLitroCombustivel <= 0) {
+                alert("Por favor, insira valores válidos para os campos.");
+                return;
+            }
+
+            const autonomiaKmLts = kmPercorridos / litrosCombustivel;
+            const valorViagem = litrosCombustivel * valorLitroCombustivel;
+            const valorPorKilometro = valorViagem / kmPercorridos;
+
+            document.getElementById("resultado").innerHTML = `
+                <p>Nome da Viagem: ${nomeViagem}</p>
+                <p>Autonomia (km/lts): ${autonomiaKmLts.toFixed(2)}</p>
+                <p>Valor da Viagem: R$ ${valorViagem.toFixed(2)}</p>
+                <p>Valor por Quilômetro: R$ ${valorPorKilometro.toFixed(2)}</p>
+            `;
+        }
+    </script>
+</body>
+</html>
